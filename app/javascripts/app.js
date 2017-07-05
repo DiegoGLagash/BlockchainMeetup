@@ -1,89 +1,174 @@
-// Import the page's CSS. Webpack will know what to do with it.
+// Webpack necesita el CSS
 import "../stylesheets/app.css";
 
-// Import libraries we need.
+// algunas librerías
 import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract'
 
-// Import our contract artifacts and turn them into usable abstractions.
-import metacoin_artifacts from '../../build/contracts/MetaCoin.json'
+// Definicion del Contrato
+import sube_contract from '../../build/contracts/Sube.json'
 
-// MetaCoin is our usable abstraction, which we'll use through the code below.
-var MetaCoin = contract(metacoin_artifacts);
+window.$ = window.jQuery = require('jquery');
 
-// The following code is simple to show off interacting with your contracts.
-// As your needs grow you will likely need to change its form and structure.
-// For application bootstrapping, check out window.addEventListener below.
+// Instancia del contrato
+var Sube = contract(sube_contract);
+
 var accounts;
-var account;
+var kiosco;
+var subte;
+var colectivo;
+var diegog;
+var julian;
 
 window.App = {
+  diegog: function() {
+    return diegog;
+  },
+
+  julian: function() {
+    return julian;
+  },
+
   start: function() {
     var self = this;
 
-    // Bootstrap the MetaCoin abstraction for Use.
-    MetaCoin.setProvider(web3.currentProvider);
+    // Para que el contrato sepa con quien interactuar
+    Sube.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
       if (err != null) {
-        alert("There was an error fetching your accounts.");
+        alert("Error:" + err);
         return;
       }
 
       if (accs.length == 0) {
-        alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+        alert("No hay cuentas disponibles.");
         return;
       }
 
       accounts = accs;
-      account = accounts[0];
+      kiosco = accounts[0];
+      subte = accounts[1];
+      colectivo = accounts[2];
+      diegog = accounts[3];
+      julian = accounts[4];
 
       self.refreshBalance();
     });
   },
 
   setStatus: function(message) {
-    var status = document.getElementById("status");
-    status.innerHTML = message;
+    $('#status').text(message);
   },
 
   refreshBalance: function() {
     var self = this;
 
     var meta;
-    MetaCoin.deployed().then(function(instance) {
+    Sube.deployed().then(function(instance) {
       meta = instance;
-      return meta.getBalance.call(account, {from: account});
+      return meta.saldo.call(kiosco);
     }).then(function(value) {
-      var balance_element = document.getElementById("balance");
-      balance_element.innerHTML = value.valueOf();
+      $('#balanceKiosco').text(value.valueOf());
+      return meta.saldo.call(subte);
+    }).then(function(value) {
+      $('#balanceSubte').text(value.valueOf());
+      return meta.saldo.call(colectivo);
+    }).then(function(value) {
+      $('#balanceColectivo').text(value.valueOf());
+      return meta.saldo.call(diegog);
+    }).then(function(value) {
+      $('#balanceDiegoG').text(value.valueOf());
+      return meta.saldo.call(julian);
+    }).then(function(value) {
+      $('#balanceJulian').text(value.valueOf());
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting balance; see log.");
+      self.setStatus("Error al traer el saldo log.");
     });
   },
 
-  sendCoin: function() {
+  vender: function(quien, amount) {
     var self = this;
 
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
-
-    this.setStatus("Initiating transaction... (please wait)");
+    amount = parseInt(amount);
+    if(isNaN(amount)) {
+      this.setStatus("Monto invalido.");
+      return;
+    }
 
     var meta;
-    MetaCoin.deployed().then(function(instance) {
+    Sube.deployed().then(function(instance) {
       meta = instance;
-      return meta.sendCoin(receiver, amount, {from: account});
+      this.setStatus("Enviando transaccion...");
+      return meta.vender(quien, amount, {from: kiosco});
     }).then(function() {
-      self.setStatus("Transaction complete!");
+      self.setStatus("Transaccion enviada.");
       self.refreshBalance();
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error sending coin; see log.");
+      self.setStatus("Error vendiendo.");
+    });
+  },
+
+  enviar: function(origen, destino, amount) {
+    var self = this;
+
+    amount = parseInt(amount);
+    if(isNaN(amount)) {
+      this.setStatus("Monto invalido.");
+      return;
+    }
+
+    var meta;
+    Sube.deployed().then(function(instance) {
+      meta = instance;
+      this.setStatus("Enviando transaccion...");
+      return meta.enviar(destino, amount, {from: origen});
+    }).then(function() {
+      self.setStatus("Transaccion enviada.");
+      self.refreshBalance();
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error enviando.");
+    });
+  },
+
+  comprarSubte : function(quien) {
+    var self = this;
+
+    var meta;
+    Sube.deployed().then(function(instance) {
+      meta = instance;
+      this.setStatus("Enviando transaccion...");
+      return meta.comprarSubte({from: quien});
+    }).then(function() {
+      self.setStatus("Transaccion enviada.");
+      self.refreshBalance();
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error comprando subte.");
+    });
+  },
+
+  comprarColectivo : function(quien) {
+    var self = this;
+
+    var meta;
+    Sube.deployed().then(function(instance) {
+      meta = instance;
+      this.setStatus("Enviando transaccion...");
+      return meta.comprarColectivo({from: quien});
+    }).then(function() {
+      self.setStatus("Transaccion enviada.");
+      self.refreshBalance();
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error comprando colectivo.");
     });
   }
+
 };
 
 window.addEventListener('load', function() {

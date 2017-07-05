@@ -33,5 +33,9 @@
     "web3": "^0.18.4",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.5.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
   }
 }

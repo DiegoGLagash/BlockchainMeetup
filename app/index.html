@@ -1,23 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MetaCoin - Truffle Webpack Demo w/ Frontend</title>
+  <title>SUBE - Demo Blockchain @ Lagash</title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <script src="./app.js"></script>
 </head>
 <body>
-  <h1>MetaCoin</h1>
-  <h2>Example Truffle Dapp</h2>
-  <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
+  <h1>SUBE</h1>
+  <h2>Demo Blockchain @ Lagash</h2>
 
-  <br>
-  <h1>Send MetaCoin</h1>
-  <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
-  <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
-  <br><br><button id="send" onclick="App.sendCoin()">Send MetaCoin</button>
-  <br><br>
-  <span id="status"></span>
-  <br>
-  <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+ <div class="table>
+    <div class="table-row">
+      <div class="table-td usuario">
+
+        <h2>DiegoG</h2>
+        <h3>Saldo <span class="black"><span id="balanceDiegoG"></span> $UBE</span></h3>
+        <br><button id="comprarSubte" onclick="App.comprarSubte(App.diegog())">Comprar Subte</button>
+        <button id="comprarColectivo" onclick="App.comprarColectivo(App.diegog())">Comprar Colectivo</button>
+        <br><label for="amountDiegoG">Amount:</label><input type="text" id="amountDiegoG" placeholder="95"></input>
+        <button id="sendJulian" onclick="App.enviar(App.diegog(), App.julian(), $('#amountDiegoG').val())">Enviar a Julian</button>
+
+      </div>
+      <div class="table-td usuario">
+
+        <h2>Julian</h2>
+        <h3>Saldo <span class="black"><span id="balanceJulian"></span> $UBE</span></h3>
+        <br><button id="comprarSubte" onclick="App.comprarSubte(App.julian())">Comprar Subte</button>
+        <button id="comprarColectivo" onclick="App.comprarColectivo(App.julian())">Comprar Colectivo</button>
+        <br><label for="amountJulian">Amount:</label><input type="text" id="amountJulian" placeholder="95"></input>
+        <button id="sendDiegoG" onclick="App.enviar(App.julian(), App.diegog(), $('#amountJulian').val())">Enviar a DiegoG</button>
+
+      </div>
+    </div>
+    <br><hr>
+    <div class="table-row">
+      <div class="table-td servicio">
+        
+        <h2>Kiosco</h2>
+        <h3>Saldo <span class="black"><span id="balanceKiosco"></span> $UBE</span></h3>
+        <label for="amount">Amount:</label><input type="text" id="amount" placeholder="95"></input>
+        <br><button id="venderDiegoG" onclick="App.vender(App.diegog(), $('#amount').val())">Vender DiegoG</button>
+        <button id="venderJulian" onclick="App.vender(App.julian(), $('#amount').val())">Vender Julian</button>
+
+      </div>
+      <div class="table-td servicio">
+        
+        <h2>Subte</h2>
+        <h3>Saldo <span class="black"><span id="balanceSubte"></span> $UBE</span></h3>
+
+      </div>
+      <div class="table-td servicio">
+        
+        <h2>Colectivo</h2>
+        <h3>Saldo <span class="black"><span id="balanceColectivo"></span> $UBE</span></h3>
+
+      </div>
+    </div>
+</div>
+<br>
+<span id="status"></span>
+
+
 </body>
 </html>
