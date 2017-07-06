@@ -101,7 +101,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
-      this.setStatus("Enviando transaccion...");
+      self.setStatus("Enviando transaccion...");
       return meta.vender(quien, amount, {from: kiosco});
     }).then(function() {
       self.setStatus("Transaccion enviada.");
@@ -124,7 +124,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
-      this.setStatus("Enviando transaccion...");
+      self.setStatus("Enviando transaccion...");
       return meta.enviar(destino, amount, {from: origen});
     }).then(function() {
       self.setStatus("Transaccion enviada.");
@@ -141,7 +141,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
-      this.setStatus("Enviando transaccion...");
+      self.setStatus("Enviando transaccion...");
       return meta.comprarSubte({from: quien});
     }).then(function() {
       self.setStatus("Transaccion enviada.");
@@ -158,7 +158,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
-      this.setStatus("Enviando transaccion...");
+      self.setStatus("Enviando transaccion...");
       return meta.comprarColectivo({from: quien});
     }).then(function() {
       self.setStatus("Transaccion enviada.");
@@ -168,7 +168,6 @@ window.App = {
       self.setStatus("Error comprando colectivo.");
     });
   }
-
 };
 
 window.addEventListener('load', function() {
