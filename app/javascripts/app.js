@@ -101,6 +101,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
+      web3.personal.unlockAccount(kiosco, "", 60*1000);
       self.setStatus("Enviando transaccion...");
       return meta.vender(quien, amount, {from: kiosco});
     }).then(function() {
@@ -124,6 +125,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
+      web3.personal.unlockAccount(origen, "", 60*1000);
       self.setStatus("Enviando transaccion...");
       return meta.enviar(destino, amount, {from: origen});
     }).then(function() {
@@ -141,6 +143,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
+      web3.personal.unlockAccount(quien, "", 60*1000);
       self.setStatus("Enviando transaccion...");
       return meta.comprarSubte({from: quien});
     }).then(function() {
@@ -158,6 +161,7 @@ window.App = {
     var meta;
     Sube.deployed().then(function(instance) {
       meta = instance;
+      web3.personal.unlockAccount(quien, "", 60*1000);
       self.setStatus("Enviando transaccion...");
       return meta.comprarColectivo({from: quien});
     }).then(function() {

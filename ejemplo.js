@@ -65,10 +65,10 @@ function usaColectivo(quien) {
 
 module.exports = function(callback) {
 
-    //kioscoVende(julian, 1000);
+    kioscoVende(julian, 1000);
     //usuarioEnvia(julian, diegog, 1000);
     //usaColectivo(diegog);
-    usaSubte(diegog);
+    //usaSubte(diegog);
 
     callback();
 }
