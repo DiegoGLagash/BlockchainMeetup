@@ -7,7 +7,7 @@ npm install
 # Para ejecutar la aplicación instalar el nodo TestRPC de desarrollo:
 
 ```
-npm install ethereumjs-testrpc
+npm install ethereumjs-testrpc web3
 ```
 
 # Para ejecutar la aplicación:
