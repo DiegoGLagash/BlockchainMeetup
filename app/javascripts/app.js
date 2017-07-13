@@ -102,7 +102,8 @@ window.App = {
     Sube.deployed().then(function(instance) {
       meta = instance;
       // Uncomment when using DevNet, not supported on TestRPC
-      //self.setStatus("Enviando transaccion...");
+      //web3.personal.unlockAccount(origen, "", 60*1000);
+      self.setStatus("Enviando transaccion...");
       return meta.vender(quien, amount, {from: kiosco});
     }).then(function() {
       self.setStatus("Transaccion enviada.");
