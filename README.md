@@ -18,6 +18,12 @@ En una consola separada:
 ```
 
 En la consola de desarrollo:
+
+Antes de iniciar hay que hacer deploy del contrato
+```
+truffle migrate
+```
+
 ```
 npm run dev
 ```
